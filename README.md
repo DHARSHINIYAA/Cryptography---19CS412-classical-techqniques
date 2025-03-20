@@ -93,7 +93,7 @@ int main() {
 ```
 
 ## OUTPUT:
-![alt text](<Screenshot 2025-03-18 142259.png>)
+![alt text](<Screenshot 2025-03-20 093840.png>)
 
 ## RESULT:
 The program is executed successfully
