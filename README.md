@@ -102,7 +102,10 @@ int main() {
 ```
 
 OUTPUT:
+
+
 ![image](https://github.com/user-attachments/assets/a1b6ca26-fbda-432e-9fd9-02141ca8ac61)
+
 
 RESULT:
 The program is executed successfully
