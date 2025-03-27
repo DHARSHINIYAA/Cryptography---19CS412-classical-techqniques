@@ -1,5 +1,5 @@
 
-**Hill Ciphe**
+**HILL CIPHER**
 
 **Hill Cipher using with different key values**
 
