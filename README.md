@@ -1,101 +1,108 @@
-# Cryptography---19CS412-classical-techqniques
-# EXP.01 Caeser Cipher
 
+**Hill Cipher
+Hill Cipher using with different key values**
 Name: DHARSHINIYAA KS (212223100004)
-# AIM:
+**AIM:**
+To develop a simple C program to implement Hill Cipher.
 
-To encrypt and decrypt the given message by using Ceaser Cipher encryption algorithm.
+DESIGN STEPS:
+Step 1:
+Design of Hill Cipher algorithnm
 
-
-## DESIGN STEPS:
-
-### Step 1:
-
-Design of Caeser Cipher algorithnm 
-
-### Step 2:
-
+Step 2:
 Implementation using C or pyhton code
 
-### Step 3:
+Step 3:
+Testing algorithm with different key values. ALGORITHM DESCRIPTION: The Hill cipher is a substitution cipher invented by Lester S. Hill in 1929. Each letter is represented by a number modulo 26. To encrypt a message, each block of n letters is multiplied by an invertible n × n matrix, again modulus 26. To decrypt the message, each block is multiplied by the inverse of the matrix used for encryption. The matrix used for encryption is the cipher key, and it should be chosen randomly from the set of invertible n × n matrices (modulo 26). The cipher can, be adapted to an alphabet with any number of letters. All arithmetic just needs to be done modulo the number of letters instead of modulo 26.
 
-1.	In Ceaser Cipher each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet.
-2.	For example, with a left shift of 3, D would be replaced by A, E would become B, and so on.
-3.	The encryption can also be represented using modular arithmetic by first transforming the letters into numbers, according to the   
-    scheme, A = 0, B = 1, Z = 25.
-4.	Encryption of a letter x by a shift n can be described mathematically as,
-                       En(x) = (x + n) mod26
-5.	Decryption is performed similarly,
-                       Dn (x)=(x - n) mod26
-
-
-## PROGRAM:
 PROGRAM:
-CaearCipher.
 ```
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 
+#define SIZE 2  // Size of the key matrix (2x2 for simplicity)
+
+int keyMatrix[SIZE][SIZE];
+
+void toUpperCase(char *str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = toupper(str[i]);
+    }
+}
+
+void removeSpaces(char *str) {
+    int count = 0;
+    for (int i = 0; str[i]; i++) {
+        if (str[i] != ' ') {
+            str[count++] = str[i];
+        }
+    }
+    str[count] = '\0';
+}
+
+void getKeyMatrix(char *key) {
+    int k = 0;
+    toUpperCase(key);
+    removeSpaces(key);
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            keyMatrix[i][j] = key[k++] - 'A';
+        }
+    }
+}
+
+void encrypt(char *text, char *cipher) {
+    toUpperCase(text);
+    removeSpaces(text);
+    int len = strlen(text);
+    if (len % SIZE != 0) {
+        text[len++] = 'X';  // Padding if needed
+        text[len] = '\0';
+    }
+    
+    for (int i = 0; i < len; i += SIZE) {
+        for (int row = 0; row < SIZE; row++) {
+            int sum = 0;
+            for (int col = 0; col < SIZE; col++) {
+                sum += keyMatrix[row][col] * (text[i + col] - 'A');
+            }
+            cipher[i + row] = (sum % 26) + 'A';
+        }
+    }
+    cipher[len] = '\0';
+}
+
+void printKeyMatrix() {
+    printf("Key Matrix:\n");
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            printf("%d ", keyMatrix[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 int main() {
-    char plain[100], cipher[100];
-    int key, i, length;
-
-    printf("\nEnter the plain text: ");
-    scanf("%99s", plain); // Limiting input to prevent buffer overflow
-
-    printf("\nEnter the key value: ");
-    scanf("%d", &key);
-
-    length = strlen(plain);
-
-    printf("\n\n\tPLAIN TEXT: %s", plain);
-    printf("\n\n\tENCRYPTED TEXT: ");
-
-    for (i = 0; i < length; i++) {
-        cipher[i] = plain[i] + key;
-
-        // Adjust for uppercase letters
-        if (isupper(plain[i]) && cipher[i] > 'Z') {
-            cipher[i] -= 26;
-        }
-        // Adjust for lowercase letters
-        if (islower(plain[i]) && cipher[i] > 'z') {
-            cipher[i] -= 26;
-        }
-
-        printf("%c", cipher[i]);
-    }
-    cipher[length] = '\0'; // Null-terminate the encrypted string
-
-    printf("\n\n\tAFTER DECRYPTION: ");
-
-    for (i = 0; i < length; i++) {
-        plain[i] = cipher[i] - key;
-
-        // Adjust for uppercase letters
-        if (isupper(cipher[i]) && plain[i] < 'A') {
-            plain[i] += 26;
-        }
-        // Adjust for lowercase letters
-        if (islower(cipher[i]) && plain[i] < 'a') {
-            plain[i] += 26;
-        }
-
-        printf("%c", plain[i]);
-    }
-    plain[length] = '\0'; // Null-terminate the decrypted string
-
-    printf("\n");
-
-    return 0; // Use return 0 instead of getch();
+    char key[SIZE * SIZE + 1], text[100], cipher[100];
+    
+    printf("Enter key (4 letters): ");
+    scanf("%s", key);
+    getKeyMatrix(key);
+    printKeyMatrix();
+    
+    printf("Enter plaintext: ");
+    scanf("%s", text);
+    
+    encrypt(text, cipher);
+    printf("Ciphertext: %s\n", cipher);
+    
+    return 0;
 }
 ```
 
-## OUTPUT:
-![alt text](<Screenshot 2025-03-20 093840.png>)
+OUTPUT:
+![image](https://github.com/user-attachments/assets/a1b6ca26-fbda-432e-9fd9-02141ca8ac61)
 
-## RESULT:
+RESULT:
 The program is executed successfully
-
-
