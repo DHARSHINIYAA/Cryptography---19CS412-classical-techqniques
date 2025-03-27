@@ -1,7 +1,7 @@
 
-**Hill Cipher
-Hill Cipher using with different key values**
-Name: DHARSHINIYAA KS (212223100004)
+**Hill Ciphe**r
+**Hill Cipher using with different key values**
+**Name: DHARSHINIYAA KS (212223100004)**
 **AIM:**
 To develop a simple C program to implement Hill Cipher.
 
